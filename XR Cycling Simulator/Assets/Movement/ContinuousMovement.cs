@@ -11,6 +11,7 @@ public class ContinuousMovement : MonoBehaviour
     public XRNode inputSource;
     public float gravityForce;
     public LayerMask groundLayer;
+    public float additionalHeight;
 
     private float fallingSpeed;
     private XROrigin rig;
@@ -32,6 +33,8 @@ public class ContinuousMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CapsuleFollowHeadset();
+
         Quaternion headYaw = Quaternion.Euler(0, rig.Camera.transform.eulerAngles.y, 0);
         Vector3 direction = headYaw * new Vector3(inputAxis.x, 0, inputAxis.y);
 
@@ -45,6 +48,13 @@ public class ContinuousMovement : MonoBehaviour
             fallingSpeed += gravityForce * Time.fixedDeltaTime;
         
         playerController.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime);
+    }
+
+    private void CapsuleFollowHeadset()
+    {
+        playerController.height = rig.CameraInOriginSpaceHeight + additionalHeight;
+        Vector3 capsuleCenter = transform.InverseTransformPoint(rig.Camera.transform.position);
+        playerController.center = new Vector3(capsuleCenter.x, playerController.height / 2 + playerController.skinWidth, capsuleCenter.z);
     }
 
     private bool CheckIfGrounded()
