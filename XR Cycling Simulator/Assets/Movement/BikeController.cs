@@ -56,13 +56,15 @@ public class BikeController : MonoBehaviour
             frontWheel.attachedRigidbody.velocity = Vector3.zero;
         }
 
-        frontWheel.motorTorque = currentAcceleration;
+        //frontWheel.motorTorque = currentAcceleration;
+
+        backWheel.motorTorque = currentAcceleration;
 
         frontWheel.brakeTorque = currentBreakForce;
 
         backWheel.brakeTorque = currentBreakForce;
 
-        currentTurnAngle = steeringWheel.localRotation.eulerAngles.y;
+        currentTurnAngle = steeringWheel.localRotation.eulerAngles.y - this.transform.localRotation.eulerAngles.y;
 
         frontWheel.steerAngle = currentTurnAngle;
 
