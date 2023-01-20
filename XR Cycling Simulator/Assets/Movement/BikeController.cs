@@ -23,8 +23,8 @@ public class BikeController : MonoBehaviour
     private float currentBreakForce;
     private float currentTurnAngle;
 
-    private float accelerationInput;
-    private float breakingInput;
+    private bool accelerationInput;
+    private bool breakingInput;
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +35,24 @@ public class BikeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputDevice accelerationDevice = InputDevices.GetDeviceAtXRNode(inputSourceLeft);
-        InputDevice breakingDevice = InputDevices.GetDeviceAtXRNode(inputSourceRight);
-        accelerationDevice.TryGetFeatureValue(CommonUsages.trigger, out accelerationInput);
-        breakingDevice.TryGetFeatureValue(CommonUsages.trigger, out breakingInput);
+        //InputDevice leftControllerDevice = InputDevices.GetDeviceAtXRNode(inputSourceLeft);
+        InputDevice rightControllerDevice = InputDevices.GetDeviceAtXRNode(inputSourceRight);
+        //leftControllerDevice.TryGetFeatureValue(CommonUsages.trigger, out accelerationInput);
+        //rightControllerDevice.TryGetFeatureValue(CommonUsages.trigger, out breakingInput);
 
-        currentAcceleration = acceleration * accelerationInput;
+        rightControllerDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out accelerationInput);
+        rightControllerDevice.TryGetFeatureValue(CommonUsages.primaryButton, out breakingInput);
 
-        if (breakingInput > 0f)
+        if (accelerationInput)
+        {
+            currentAcceleration = acceleration;
+        }     
+        else
+        {
+            currentAcceleration = 0;
+        }
+
+        if (breakingInput)
         {
             currentBreakForce = breakingForce;
         }
@@ -51,7 +61,7 @@ public class BikeController : MonoBehaviour
             currentBreakForce = 0f;
         }
 
-        if (breakingInput > 0f && accelerationInput == 0 && (frontWheel.attachedRigidbody.velocity.x <= maxVel && frontWheel.attachedRigidbody.velocity.y <= maxVel && frontWheel.attachedRigidbody.velocity.z <= maxVel) || (frontWheel.attachedRigidbody.velocity.x <= minVel && frontWheel.attachedRigidbody.velocity.y <= minVel && frontWheel.attachedRigidbody.velocity.z <= minVel))
+        if (breakingInput && !accelerationInput && (frontWheel.attachedRigidbody.velocity.x <= maxVel && frontWheel.attachedRigidbody.velocity.y <= maxVel && frontWheel.attachedRigidbody.velocity.z <= maxVel) || (frontWheel.attachedRigidbody.velocity.x <= minVel && frontWheel.attachedRigidbody.velocity.y <= minVel && frontWheel.attachedRigidbody.velocity.z <= minVel))
         {
             frontWheel.attachedRigidbody.velocity = Vector3.zero;
         }
