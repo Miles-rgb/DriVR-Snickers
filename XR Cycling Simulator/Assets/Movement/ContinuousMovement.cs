@@ -29,6 +29,7 @@ public class ContinuousMovement : MonoBehaviour
     {
         InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
         device.TryGetFeatureValue(CommonUsages.primary2DAxis, out inputAxis);
+        
     }
 
     private void FixedUpdate()
@@ -47,7 +48,7 @@ public class ContinuousMovement : MonoBehaviour
         else
             fallingSpeed += gravityForce * Time.fixedDeltaTime;
         
-        playerController.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime);
+        playerController.Move(Vector3.up * fallingSpeed * Time.fixedDeltaTime);        
     }
 
     private void CapsuleFollowHeadset()

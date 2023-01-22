@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/BikeCourse.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Miles.unity
-    guid: df74fbb9c590ad24597ac2bac1a2f55f
+    path: Assets/Scenes/Level01.unity
+    guid: 5fde83090fa38314dae0c74fe208bc30
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 734055dccef0bf840906df2c53feebd7, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 264dd90b966304346aa58b3fb478f913, type: 2}
