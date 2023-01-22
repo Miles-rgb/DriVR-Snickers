@@ -12,7 +12,7 @@ public class CarEast : MonoBehaviour
     public DetectorEast isThereCar;
     void Start()
     {
-        WhichWay = Random.Range(1, 3);
+        WhichWay = Random.Range(1, 2);
         Path = GameObject.FindObjectOfType<Trafficmanager>();
     }
 
@@ -37,15 +37,7 @@ public class CarEast : MonoBehaviour
             transform.position = Path.PEastToStraight.path.GetPointAtDistance(distanceTravelled);
             transform.rotation = Path.PEastToStraight.path.GetRotationAtDistance(distanceTravelled);
             EndOfPath(Path.PEastToStraight.path.length);
-        }
-
-        if (WhichWay == 2)
-        {
-            distanceTravelled += 2 * Time.deltaTime;
-            transform.position = Path.PEastToLeft.path.GetPointAtDistance(distanceTravelled);
-            transform.rotation = Path.PEastToLeft.path.GetRotationAtDistance(distanceTravelled);
-            EndOfPath(Path.PEastToLeft.path.length);
-        }
+        }        
     }
     private void EndOfPath(float lenght)
     {
